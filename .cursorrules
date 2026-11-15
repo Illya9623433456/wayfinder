@@ -1,0 +1,21 @@
+# WayFinder - Project Rules
+
+## Tech Stack
+- Backend: Python, FastAPI, SQLite, SQLAlchemy
+- Frontend: React, Vite, Tailwind CSS
+
+## Backend Guidelines (FastAPI)
+- Use standard RESTful routing.
+- Keep route handlers small; delegate business logic to separate functions.
+- Always configure CORS middleware to allow frontend communication.
+- Use Pydantic models for request/response validation.
+- Integrate AI (OpenAI API or mock fallback) strictly in the service layer.
+
+## Frontend Guidelines (React)
+- Use functional components and React Hooks.
+- Keep API calls in a separate service file (e.g., `api.js` or `services/api.js`).
+- Focus on clean, intuitive UX with clear error handling.
+
+## General
+- Write clean, self-documenting code.
+- Provide comments for complex AI prompt engineering logic.
