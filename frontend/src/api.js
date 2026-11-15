@@ -10,6 +10,23 @@ const api = axios.create({
 });
 
 export const tripService = {
+  // --- AUTORYZACIJA ---
+  login: async (credentials) => {
+    const response = await api.post('/auth/login', credentials);
+    return response.data;
+  },
+
+  register: async (credentials) => {
+    const response = await api.post('/auth/register', credentials);
+    return response.data;
+  },
+
+  googleLogin: async (accessToken) => {
+    const response = await api.post('/auth/google', { access_token: accessToken });
+    return response.data;
+  },
+
+  // --- TRASY I EKO ---
   searchRoute: async (origin, destination, preferences = '') => {
     const storedUser = JSON.parse(localStorage.getItem('wayfinder_user') || 'null');
     const userEmail = storedUser?.email || localStorage.getItem('userEmail') || 'guest';

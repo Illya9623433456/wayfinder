@@ -901,6 +901,24 @@ def login_user(creds: UserCredentials, db: Session = Depends(get_db)):
         }
     }
 
+@app.post("/api/auth/register")
+def register_user(creds: UserCredentials, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.email == creds.email).first()
+    if user:
+        raise HTTPException(status_code=400, detail="Email already registered")
+    user = User(email=creds.email, password=creds.password, name=creds.name)
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+    return {
+        "success": True,
+        "user": {
+            "id": user.id,
+            "email": user.email,
+            "name": user.name
+        }
+    }
+
 @app.post("/api/auth/google")
 def google_auth(data: GoogleAuthRequest, db: Session = Depends(get_db)):
     try:
