@@ -74,6 +74,20 @@ export const tripService = {
     const response = await api.get('/context/preferences');
     return response.data;
   },
+
+    // --- CZAT AI ---
+  // messages: [{ role: 'user' | 'assistant', content: '...' }]
+  // Zwraca: { reply, routes: [obiekty tras jak z /routes], mode: 'ai' | 'fallback' }
+  chat: async (messages, { lat = null, lon = null, language = 'pl' } = {}) => {
+    const storedUser = JSON.parse(localStorage.getItem('wayfinder_user') || 'null');
+    const userEmail = storedUser?.email || localStorage.getItem('userEmail') || 'guest';
+    const response = await api.post(
+      '/chat',
+      { messages, user_email: userEmail, lat, lon, language },
+      { timeout: 60000 } // AI + kilka wywołań narzędzi może chwilę potrwać
+    );
+    return response.data;
+  },
 };
 
 export default api;
